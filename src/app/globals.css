@@ -4,39 +4,39 @@
   --font-sans: 'Inter', sans-serif;
   --font-display: 'Outfit', sans-serif;
 
-  /* HSL Color Palette - Deep Premium Theme */
-  --bg-base: #090d16;
-  --bg-surface: #111827;
-  --bg-surface-elevated: #1f2937;
-  --border-color: #374151;
-  --border-glow: #4f46e5;
+  /* HSL Color Palette - TSTC Light & Professional Theme */
+  --bg-base: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #f1f5f9;
+  --border-color: #e2e8f0;
+  --border-glow: #b30838;
   
-  --primary: #6366f1;
-  --primary-hover: #4f46e5;
-  --primary-glow: rgba(99, 102, 241, 0.15);
+  --primary: #b30838;         /* TSTC Red */
+  --primary-hover: #94052c;   /* Darker TSTC Red */
+  --primary-glow: rgba(179, 8, 56, 0.08);
   
-  --secondary: #14b8a6;
-  --secondary-hover: #0d9488;
-  --secondary-glow: rgba(20, 184, 166, 0.15);
+  --secondary: #1e293b;       /* Slate Black / Charcoal */
+  --secondary-hover: #0f172a; /* Darker Charcoal */
+  --secondary-glow: rgba(30, 41, 59, 0.08);
   
-  --accent: #a855f7;
+  --accent: #2563eb;          /* Royal Blue */
   
   /* Text colors */
-  --text-primary: #f3f4f6;
-  --text-secondary: #9ca3af;
-  --text-muted: #6b7280;
+  --text-primary: #0f172a;    /* Dark Charcoal */
+  --text-secondary: #475569;  /* Slate Gray */
+  --text-muted: #94a3b8;      /* Muted Silver/Gray */
   
   /* Statuses */
-  --status-new: #3b82f6;
-  --status-review: #f59e0b;
-  --status-success: #10b981;
-  --status-danger: #ef4444;
-  --status-neutral: #6b7280;
+  --status-new: #2563eb;
+  --status-review: #d97706;
+  --status-success: #059669;
+  --status-danger: #dc2626;
+  --status-neutral: #64748b;
   
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.5);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.5);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
-  --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.2);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.08);
+  --shadow-glow: 0 0 20px rgba(179, 8, 56, 0.1);
   
   --radius-sm: 6px;
   --radius-md: 10px;
@@ -229,19 +229,19 @@ a:hover {
 }
 .btn-accent {
   background-color: var(--secondary);
-  color: #030712;
+  color: white;
 }
 .btn-accent:hover {
   background-color: var(--secondary-hover);
-  box-shadow: 0 0 12px var(--secondary);
+  box-shadow: 0 0 12px rgba(30, 41, 59, 0.2);
 }
 .btn-danger {
   background-color: var(--status-danger);
   color: white;
 }
 .btn-danger:hover {
-  background-color: #dc2626;
-  box-shadow: 0 0 12px var(--status-danger);
+  background-color: #b91c1c;
+  box-shadow: 0 0 12px rgba(220, 38, 38, 0.2);
 }
 .btn:disabled {
   opacity: 0.5;
@@ -261,11 +261,11 @@ a:hover {
   border-radius: 9999px;
   border: 1px solid transparent;
 }
-.badge-new { background-color: rgba(59, 130, 246, 0.15); color: #60a5fa; border-color: rgba(59, 130, 246, 0.3); }
-.badge-review { background-color: rgba(245, 158, 11, 0.15); color: #fbbf24; border-color: rgba(245, 158, 11, 0.3); }
-.badge-success { background-color: rgba(16, 185, 129, 0.15); color: #34d399; border-color: rgba(16, 185, 129, 0.3); }
-.badge-danger { background-color: rgba(239, 68, 68, 0.15); color: #f87171; border-color: rgba(239, 68, 68, 0.3); }
-.badge-neutral { background-color: rgba(107, 114, 128, 0.15); color: #9ca3af; border-color: rgba(107, 114, 128, 0.3); }
+.badge-new { background-color: rgba(37, 99, 235, 0.08); color: #1d4ed8; border-color: rgba(37, 99, 235, 0.2); }
+.badge-review { background-color: rgba(217, 119, 6, 0.08); color: #b45309; border-color: rgba(217, 119, 6, 0.2); }
+.badge-success { background-color: rgba(5, 150, 105, 0.08); color: #047857; border-color: rgba(5, 150, 105, 0.2); }
+.badge-danger { background-color: rgba(220, 38, 38, 0.08); color: #b91c1c; border-color: rgba(220, 38, 38, 0.2); }
+.badge-neutral { background-color: rgba(100, 116, 139, 0.08); color: #475569; border-color: rgba(100, 116, 139, 0.2); }
 
 /* Double Panel Interface - Core Concept (Submission Detail) */
 .split-layout {
@@ -323,7 +323,7 @@ a:hover {
 }
 
 .table tr:hover td {
-  background-color: rgba(255, 255, 255, 0.02);
+  background-color: rgba(0, 0, 0, 0.015);
 }
 
 /* Alerts / Callouts */
@@ -335,10 +335,10 @@ a:hover {
   display: flex;
   gap: 0.75rem;
 }
-.alert-info { background-color: rgba(99, 102, 241, 0.1); border-color: rgba(99, 102, 241, 0.3); color: #818cf8; }
-.alert-warning { background-color: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); color: #fbbf24; }
-.alert-success { background-color: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3); color: #34d399; }
-.alert-danger { background-color: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); color: #f87171; }
+.alert-info { background-color: rgba(37, 99, 235, 0.05); border-color: rgba(37, 99, 235, 0.15); color: #1d4ed8; }
+.alert-warning { background-color: rgba(217, 119, 6, 0.05); border-color: rgba(217, 119, 6, 0.15); color: #b45309; }
+.alert-success { background-color: rgba(5, 150, 105, 0.05); border-color: rgba(5, 150, 105, 0.15); color: #047857; }
+.alert-danger { background-color: rgba(220, 38, 38, 0.05); border-color: rgba(220, 38, 38, 0.15); color: #b91c1c; }
 
 /* Micro-animations */
 @keyframes fadeIn {
@@ -351,7 +351,9 @@ a:hover {
 }
 
 .logo-glow {
-  text-shadow: 0 0 10px rgba(99, 102, 241, 0.8), 0 0 20px rgba(20, 184, 166, 0.4);
+  color: var(--primary);
+  font-weight: 800;
+  text-shadow: none;
 }
 
 /* Grid layout for Dashboard metrics */
