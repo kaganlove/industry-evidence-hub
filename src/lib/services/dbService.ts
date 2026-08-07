@@ -233,12 +233,98 @@ export async function getCourses(): Promise<seed.Course[]> {
   return data || [];
 }
 
+export async function createCourse(course: Omit<seed.Course, 'id' | 'created_at'>): Promise<seed.Course> {
+  const newCourse: seed.Course = {
+    ...course,
+    id: `course-${Math.random().toString(36).substring(2, 9)}`,
+    created_at: new Date().toISOString()
+  };
+
+  if (!isMockMode) {
+    const { data, error } = await supabase!
+      .from('courses')
+      .insert([newCourse])
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  }
+
+  const list = getStorageItem<seed.Course[]>(KEYS.COURSES, []);
+  list.push(newCourse);
+  setStorageItem(KEYS.COURSES, list);
+  return newCourse;
+}
+
+export async function updateCourse(id: string, updates: Partial<seed.Course>): Promise<seed.Course> {
+  if (!isMockMode) {
+    const { data, error } = await supabase!
+      .from('courses')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  }
+
+  const list = getStorageItem<seed.Course[]>(KEYS.COURSES, []);
+  const idx = list.findIndex(c => c.id === id);
+  if (idx === -1) throw new Error('Course not found');
+  list[idx] = { ...list[idx], ...updates };
+  setStorageItem(KEYS.COURSES, list);
+  return list[idx];
+}
+
 export async function getCompetencies(): Promise<seed.Competency[]> {
   if (isMockMode) {
     return getStorageItem<seed.Competency[]>(KEYS.COMPETENCIES, []);
   }
   const { data } = await supabase!.from('competencies').select('*').eq('active', true).order('sequence');
   return data || [];
+}
+
+export async function createCompetency(comp: Omit<seed.Competency, 'id' | 'created_at'>): Promise<seed.Competency> {
+  const newComp: seed.Competency = {
+    ...comp,
+    id: `comp-${Math.random().toString(36).substring(2, 9)}`,
+    created_at: new Date().toISOString()
+  };
+
+  if (!isMockMode) {
+    const { data, error } = await supabase!
+      .from('competencies')
+      .insert([newComp])
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  }
+
+  const list = getStorageItem<seed.Competency[]>(KEYS.COMPETENCIES, []);
+  list.push(newComp);
+  setStorageItem(KEYS.COMPETENCIES, list);
+  return newComp;
+}
+
+export async function updateCompetency(id: string, updates: Partial<seed.Competency>): Promise<seed.Competency> {
+  if (!isMockMode) {
+    const { data, error } = await supabase!
+      .from('competencies')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  }
+
+  const list = getStorageItem<seed.Competency[]>(KEYS.COMPETENCIES, []);
+  const idx = list.findIndex(c => c.id === id);
+  if (idx === -1) throw new Error('Competency not found');
+  list[idx] = { ...list[idx], ...updates };
+  setStorageItem(KEYS.COMPETENCIES, list);
+  return list[idx];
 }
 
 // ----------------------------------------------------
