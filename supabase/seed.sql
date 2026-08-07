@@ -2,20 +2,17 @@
 -- Minnesota's Demo Technical College (Diesel Equipment Technology)
 
 -- 1. Insert Organization
-INSERT INTO organizations (id, name, domain, created_at)
+INSERT INTO organizations (id, name, short_name, slug, status, created_at)
 VALUES (
   'org-demo-dtc',
   'Minnesota Demo Technical College',
-  'demo-dtc.edu',
+  'Demo Tech',
+  'demo-tech',
+  'active',
   NOW()
 ) ON CONFLICT (id) DO NOTHING;
 
--- 2. Insert Organization Configuration Settings
--- Supabase schema has organization_settings table or config stored in organization metadata?
--- According to schema.sql, there is no separate organization_settings table; settings are in organizations or mock configurations.
--- Let's make sure our seed inserts into core tables.
-
--- 3. Insert Programs
+-- 2. Insert Programs
 INSERT INTO programs (id, organization_id, code, name, department, description, created_at)
 VALUES (
   'prog-det',
@@ -27,7 +24,7 @@ VALUES (
   NOW()
 ) ON CONFLICT (id) DO NOTHING;
 
--- 4. Insert Courses
+-- 3. Insert Courses
 INSERT INTO courses (id, program_id, code, name, description, active, created_at)
 VALUES 
 (
@@ -58,7 +55,7 @@ VALUES
   NOW()
 ) ON CONFLICT (id) DO NOTHING;
 
--- 5. Insert Competencies
+-- 4. Insert Competencies
 INSERT INTO competencies (id, course_id, code, title, description, sequence, active, created_at)
 VALUES
 (
@@ -102,10 +99,8 @@ VALUES
   NOW()
 ) ON CONFLICT (id) DO NOTHING;
 
--- 6. Insert Mock Users
--- Note: Supabase auth is handled via auth.users. But for our application's public.users table,
--- we insert records representing our mock profiles:
-INSERT INTO users (id, organization_id, email, role, first_name, last_name, title, active, created_at)
+-- 5. Insert Mock Users
+INSERT INTO users (id, organization_id, email, role, first_name, last_name, title, status, created_at)
 VALUES
 (
   'usr-id',
@@ -115,7 +110,7 @@ VALUES
   'Clara',
   'Barton',
   'Lead Instructional Designer',
-  TRUE,
+  'active',
   NOW()
 ),
 (
@@ -126,7 +121,7 @@ VALUES
   'Arthur',
   'Pendelton',
   'Director of Curriculum & Alignment',
-  TRUE,
+  'active',
   NOW()
 ),
 (
@@ -137,7 +132,7 @@ VALUES
   'Marcus',
   'Aurelius',
   'Heavy Machinery Subject Matter Expert',
-  TRUE,
+  'active',
   NOW()
 ),
 (
@@ -148,7 +143,7 @@ VALUES
   'George',
   'Washington',
   'Diesel Technology Faculty Lead',
-  TRUE,
+  'active',
   NOW()
 ),
 (
@@ -159,11 +154,11 @@ VALUES
   'Jane',
   'Doe',
   'System Administrator',
-  TRUE,
+  'active',
   NOW()
 ) ON CONFLICT (id) DO NOTHING;
 
--- 7. Insert Industry Partners
+-- 6. Insert Industry Partners
 INSERT INTO industry_partners (id, organization_id, organization_name, industry_sector, city, state, country, active, created_at)
 VALUES
 (
@@ -200,7 +195,7 @@ VALUES
   NOW()
 ) ON CONFLICT (id) DO NOTHING;
 
--- 8. Insert Industry Contributors
+-- 7. Insert Industry Contributors
 INSERT INTO industry_contributors (id, industry_partner_id, first_name, last_name, job_title, years_in_industry, contributor_type, active, created_at)
 VALUES
 (
@@ -237,7 +232,7 @@ VALUES
   NOW()
 ) ON CONFLICT (id) DO NOTHING;
 
--- 9. Insert Evidence Requests (Campaigns)
+-- 8. Insert Evidence Requests (Campaigns)
 INSERT INTO evidence_requests (id, organization_id, course_id, title, request_code, status, description, created_by, created_at)
 VALUES
 (
@@ -263,7 +258,7 @@ VALUES
   NOW() - INTERVAL '5 days'
 ) ON CONFLICT (id) DO NOTHING;
 
--- 10. Insert Submissions (Accepted and New Sourced Evidence)
+-- 9. Insert Submissions (Accepted and New Sourced Evidence)
 INSERT INTO submissions (
   id, organization_id, contributor_id, reference_id, title, evidence_type, job_role, 
   task_description, tools_resources, frequency, entry_level_expectation, common_mistakes, 
@@ -335,7 +330,7 @@ VALUES
   NOW() - INTERVAL '1 day'
 ) ON CONFLICT (id) DO NOTHING;
 
--- 11. Insert Submission-Competency Mappings
+-- 10. Insert Submission-Competency Mappings
 INSERT INTO submission_competencies (submission_id, competency_id, rationale, relevance_rating, mapped_by, created_at)
 VALUES
 (
@@ -355,7 +350,7 @@ VALUES
   NOW()
 ) ON CONFLICT (submission_id, competency_id) DO NOTHING;
 
--- 12. Insert Curriculum Artifacts
+-- 11. Insert Curriculum Artifacts
 INSERT INTO curriculum_artifacts (id, organization_id, competency_id, title, artifact_type, version, active, created_at)
 VALUES
 (
@@ -379,7 +374,7 @@ VALUES
   NOW() - INTERVAL '90 days'
 ) ON CONFLICT (id) DO NOTHING;
 
--- 13. Insert Curriculum Actions (Trace Log)
+-- 12. Insert Curriculum Actions (Trace Log)
 INSERT INTO curriculum_actions (
   id, organization_id, program_id, course_id, competency_id, action_type, 
   title, description, rationale, effective_term, status, created_by, created_at
@@ -401,7 +396,7 @@ VALUES
   NOW() - INTERVAL '5 days'
 ) ON CONFLICT (id) DO NOTHING;
 
--- 14. Insert Validation Requests
+-- 13. Insert Validation Requests
 INSERT INTO validation_requests (id, curriculum_artifact_id, token, expires_at, created_by, created_at)
 VALUES
 (
@@ -413,7 +408,7 @@ VALUES
   NOW() - INTERVAL '5 days'
 ) ON CONFLICT (id) DO NOTHING;
 
--- 15. Insert Validation Responses
+-- 14. Insert Validation Responses
 INSERT INTO validation_responses (
   id, validation_request_id, industry_partner_id, reviewer_name, review_status, 
   clarity_rating, completeness_rating, preparedness_rating, unrealistic_missing_comments, 
@@ -434,7 +429,7 @@ VALUES
   NOW() - INTERVAL '3 days'
 ) ON CONFLICT (id) DO NOTHING;
 
--- 16. Insert Task Profiles
+-- 15. Insert Task Profiles
 INSERT INTO task_profiles (
   id, organization_id, title, occupation, task_description, safety_precautions, 
   tools_required, typical_duration_minutes, created_by, created_at
