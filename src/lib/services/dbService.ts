@@ -5,6 +5,7 @@ import * as seed from '../db/mockSeed';
 // Check if we should enforce Mock DB mode
 const forceMock = typeof window !== 'undefined' && localStorage.getItem('NEXT_PUBLIC_USE_MOCK_DB') === 'true';
 export const isMockMode = !isSupabaseConfigured || forceMock;
+export const MOCK_USERS = seed.MOCK_USERS;
 
 // Key prefixes for localStorage storage
 const KEYS = {
@@ -93,7 +94,7 @@ export function initializeLocalState(forceReset = false) {
   getStorageItem(KEYS.CONTRIBUTORS, seed.MOCK_CONTRIBUTORS);
   getStorageItem(KEYS.REQUESTS, seed.MOCK_EVIDENCE_REQUESTS);
   getStorageItem(KEYS.SUBMISSIONS, seed.MOCK_SUBMISSIONS);
-  getStorageItem(KEYS.SUBMISSION_COMPETENCIES, seed.MOCK_SUBMISSION_COMPETENCIES);
+  getStorageItem(KEYS.SUBMISSION_COMPETENCIES, seed.MOCK_SUBMISSION_COMPETENCY_MAPPINGS);
   getStorageItem(KEYS.CURRICULUM_ARTIFACTS, seed.MOCK_CURRICULUM_ARTIFACTS);
   getStorageItem(KEYS.CURRICULUM_ACTIONS, seed.MOCK_CURRICULUM_ACTIONS);
   getStorageItem(KEYS.VALIDATION_REQUESTS, seed.MOCK_VALIDATION_REQUESTS);
@@ -813,4 +814,27 @@ export async function getEvidenceGapReport() {
 
 export async function getAuditLogs(): Promise<seed.AuditLog[]> {
   return getStorageItem<seed.AuditLog[]>(KEYS.AUDIT_LOGS, []).sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+}
+
+export async function getPartners(): Promise<seed.IndustryPartner[]> {
+  if (!isMockMode) {
+    const { data, error } = await supabase
+      .from('industry_partners')
+      .select('*')
+      .order('organization_name', { ascending: true });
+    if (error) throw error;
+    return data || [];
+  }
+  return getStorageItem<seed.IndustryPartner[]>(KEYS.PARTNERS, []);
+}
+
+export async function getContributors(): Promise<seed.IndustryContributor[]> {
+  if (!isMockMode) {
+    const { data, error } = await supabase
+      .from('industry_contributors')
+      .select('*');
+    if (error) throw error;
+    return data || [];
+  }
+  return getStorageItem<seed.IndustryContributor[]>(KEYS.CONTRIBUTORS, []);
 }
