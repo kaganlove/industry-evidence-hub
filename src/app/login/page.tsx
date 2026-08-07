@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { getPrograms, loginAsUser, MOCK_USERS, User } from '@/lib/services/dbService';
+import { getPrograms, loginAsUser, MOCK_USERS, User, isMockMode } from '@/lib/services/dbService';
+import { supabase } from '@/lib/db/client';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -28,20 +29,37 @@ export default function LoginPage() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) {
       setError('Please fill in all fields');
       return;
     }
     setLoading(true);
-    // In mock mode, find a matching user by email
-    const match = usersList.find(u => u.email.toLowerCase() === email.toLowerCase());
-    if (match) {
-      handleMockLogin(match.id);
+    setError('');
+
+    if (!isMockMode) {
+      try {
+        const { data, error } = await supabase!.auth.signInWithPassword({
+          email,
+          password,
+        });
+        if (error) throw error;
+        router.push('/');
+        router.refresh();
+      } catch (err: any) {
+        setError(err.message || 'Authentication failed');
+        setLoading(false);
+      }
     } else {
-      setError('Invalid email or password in demo database mode. Please choose one of the quick roles below.');
-      setLoading(false);
+      // In mock mode, find a matching user by email
+      const match = usersList.find(u => u.email.toLowerCase() === email.toLowerCase());
+      if (match) {
+        handleMockLogin(match.id);
+      } else {
+        setError('Invalid email or password in demo database mode. Please choose one of the quick roles below.');
+        setLoading(false);
+      }
     }
   };
 
