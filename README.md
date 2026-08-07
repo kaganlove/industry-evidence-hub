@@ -1,8 +1,12 @@
 # Industry Evidence Hub
 
-A production-quality web application built to help technical colleges, workforce programs, instructional designers, and industry partners capture authentic occupational evidence from the workplace and link it to curriculum adjustments (courses, competencies, and mastery assessments).
+🚀 **[CLICK HERE TO LAUNCH THE LIVE PREVIEW](https://kaganlove.github.io/industry-evidence-hub/)**
 
-The application strictly separates **Raw Source Evidence** (provided by industry) from **Human Interpretation & Mappings** (created by faculty/instructional designers), with **zero AI dependencies** to maintain strict human accountability and audit integrity.
+---
+
+## 📋 Overview
+
+A production-quality web application built to help technical colleges, workforce programs, instructional designers, and industry partners capture authentic occupational evidence from the workplace and link it to curriculum adjustments (courses, competencies, and mastery assessments).
 
 ---
 
